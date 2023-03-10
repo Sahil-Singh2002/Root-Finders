@@ -69,12 +69,29 @@ The Fix-point iteration Part 2, from here on the code is of my own. This functio
 The Convergence behaviour: Plotting the error. We start the the problem with the assumption that we know what exaclty p is. We plot the absolute value of the error, 
 e_n = | p - p_n |, at each iteration n = 1,2,3,... . This function will just plot the error using matplotlib.pyplot. We see on of the plots the convergence of both iterative methods such as Fixed-point iteration and Newton's Method. In this we see clearly that Newton's method has a faster convergence rate in a low number of iterations, then Fix-point iteration does. Both starting from the same p0. 
 
-    The function f is the input function which the user will put in to find the convergence of our root.
-    The function dfdx is the input differentiated function of f which the user will put in to find the convergence of our root.
-    The function g is the input which the user will put in to find the convergence of our fixpoint.
-    The Float p0 is the point in our domain, which represents the initual approximation to start the Newton's Method. 
-    The integer Nmax the maximum number of iterations which our function will run in a for loop.
-    The Float p is the value that we assume is the actual root or point of convergence. Which we are testing for error with.
+    def plot_convergence (p ,f , dfdx ,g , p0 , Nmax ):
+    TOL = 10**(-20)
+    # Fixed - point iteration
+    p_array = fixedpoint_iteration(g,p0,Nmax)
+    e_array = np.abs(p-p_array)
+    n_array = 1 + np.arange(np.shape(p_array)[0])
+    # Newton method
+    p_newton_array = newton_stop(f,dfdx,p0,Nmax,TOL) 
+    e_newton_array = np.abs(p-p_newton_array)
+    n_newton_array =1+np.arange(np.shape(p_newton_array)[0])
+    #Set Axies and Title
+    fig , ax = plt . subplots ()
+    ax . set_yscale ('log')
+    ax . set_xlabel ("n")
+    ax . set_ylabel ("|p- p_n |")
+    ax . set_title (" Convergence behaviour ")
+    ax . grid ( True )
+    # Plot
+    ax.plot( n_array , e_array , "o", label ="FP iteration ", linestyle ='--')
+    ax.plot( n_newton_array ,e_newton_array , "*", label ="Newton's Method ", linestyle = ':')
+    # Add legend
+    ax.legend(bbox_to_anchor = (1.395, 1))
+    return fig , ax
     
   As we see, the function creates a figure with a plot of the errors for the fixed-point iteration method, using the function fixedpoint_iteration. Also ploting,
   in the same axies, the errors for Newton's method. Computing the Newton-method approximations using your newton_stop, based on the input for (f,fddx,p0,Nmax)
@@ -83,10 +100,17 @@ e_n = | p - p_n |, at each iteration n = 1,2,3,... . This function will just plo
  Optimizing the Fix-point iteration Method. In this function we return the fixed-point iteration method with stopping crition and aim to optimise the parameter c
  within the functuion g where g(x) = x - cf(x). Our starting off peramters are (f,c_array,p0,TOL) for optimize_FPmethod. 
     
-    The function f is the input function which the user will put in to find the convergence of our root.
-    The np.ndarray c_array is a linspace of of interval with a set amount of intervals and these points are are what we test for the fastest convergence. 
-    The Float p0 is the point in our domain, which represents the initual approximation to start the Newton's Method. 
-    The Float TOL is the tolerance which the function will allow the difference between our p_(k+1) and p_k.
+    def optimize_FPmethod (f , c_array , p0 , TOL ) :
+    n_iteration = []
+    for i in range(len(c_array)):
+        c = c_array[i,]
+        g = lambda x: x - c*f(x)
+        b = len(fixedpoint_iteration_stop(g,p0,100,TOL))
+        n_iteration.append(b)
+    n_opt = min(n_iteration)
+    index = n_iteration.index(n_opt) 
+    c_opt = c_array[index,]
+    return c_opt,n_opt
     
    The function should return a real number/ float c_opt and the corresponding integer n_opt, which corresponds to the optional value c in the following way:
    the optimal c - c_opt is the element inside of our ndarray c_array, for which the fastest convergence takes place given the Tolerance value TOL, using the 
