@@ -1,4 +1,4 @@
-# linear-system
+# Linear-System
 Scientific computation coursework
   
 The Fix-point iteration Part 1, from here on the code is of my own. This function considers the fixed-point problem g(p) = p. To numerically find a fixed point, we consider the fixed-point iteration method (p0 given). The function is mainly writen in the method of p_n = g(p_n-1) where n belongs to a set of natural numbers. The purpose of this function is to cause us to find a point of convergence after n number of iterations which in our function is Nmax, such that g(x_n) = x_n as n aproched infinity.
