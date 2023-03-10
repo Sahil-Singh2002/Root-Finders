@@ -13,33 +13,7 @@ class InputError(Exception):
         pass
     def __str__(self):
         return "The differential of the function f must not be 0"
-
-def bisection(f,a,b,Nmax):
     
-    """
-    Bisection Method: Returns a numpy array of the 
-    sequence of approximations obtained by the bisection method.
-    
-    Parameters
-    ----------
-    f : function
-        Input function for which the zero is to be found.
-    a : real number
-        Left side of interval.
-    b : real number
-        Right side of interval.
-    Nmax : integer
-        Number of iterations to be performed.
-        
-    Returns
-    -------
-    p_array : numpy.ndarray, shape (Nmax,)
-        Array containing the sequence of approximations.
-    """
-    
-    # Initialise the array with zeros
-
-#3
 def fixedpoint_iteration (g , p0 , Nmax ) :
     """
     In this iteration the initual value of p0 is set by the user and then
