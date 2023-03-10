@@ -1,25 +1,21 @@
 # linear-system
 Scientific computation coursework
-
-The bisection method, the code is note of my own as this is code is given to us by our lecturer to start of the next codes proceding forth. However i will do justice to this code by giving a breef explanation to this method. This method in my opinion is inspired by looking the mean value theroem where if we have an intervil of [a,b] and we find that f(a) > 0  and f(b) <0 or vise versa. Then there must exist c which is in (a,b) for which f(c) = 0. 
-
-  The purpouse of this method is to find the root of our function by repeatedly dividing the intervil. In our function we are given the permeters of (f,a,b,Nmax).
-    
-    The function f is the input which the user will put in to find the root for a given interval.
-    The Float a and b are two distinct values, a != b, which we are testing the convergence in. 
-    The integer Nmax the maximum number of iterations which our function will run in a for loop.
-   
-  The output of our function an numpy.ndarray called p_array, its dimension is (Nmax, ). This is provides an approximations p_n where n belongs to a 
-  set of naterual numbers computed by the bisector method.
   
 The Fix-point iteration Part 1, from here on the code is of my own. This function considers the fixed-point problem g(p) = p. To numerically find a fixed point, we consider the fixed-point iteration method (p0 given). The function is mainly writen in the method of p_n = g(p_n-1) where n belongs to a set of natural numbers. The purpose of this function is to cause us to find a point of convergence after n number of iterations which in our function is Nmax, such that g(x_n) = x_n as n aproched infinity.
-  
-  The purpouse of this method is to find a point x_n of our function by repeatedly iterating the value of x_n-1 into our function g. 
-  In our function we are given the permeters of (g,p0,Nmax).
-  
-    The function g is the input which the user will put in to find the convergence of our fixpoint.
-    The Float p0 is the point in our domain, which represents the initual approximation to start the fix-point iteration. 
-    The integer Nmax the maximum number of iterations which our function will run in a for loop.
+
+    def fixedpoint_iteration (g , p0 , Nmax ) :
+    p_list = []
+    pn = p0
+    if p0 <= 0:
+        raise ValueError("The input digit must be a positive Integer")
+    if Nmax <= 0 or type(Nmax)!=int:
+        raise ValueError("The input for the maximum iteration needs to be posive Integer")
+    for n in np.arange(0, Nmax):
+        pn_plusone = g(pn)
+        p_list.append(pn_plusone)
+        pn = pn_plusone
+    p_array = np.array(p_list)
+    return p_array
       
   The output of our function an numpy.ndarray called p_array, its dimension is (Nmax, ). This is provides an approximations p_n where n belongs to a 
   set of naterual numbers computed by the fixed-point iteration.
