@@ -40,16 +40,27 @@ The Fix-point iteration Part 2, from here on the code is of my own. This functio
     
   The output of our function an numpy.ndarray called p_array, its dimension is (k, ). This is provides an approximations p_n where n belongs to a 
   set of naterual numbers up to k computed by the fixed-point iteration with the stopping criterion. The value of k is the smallest integer such that stopping
-  criterion holds, unless Nmax iteration have been performed, in that case k = Nmax.
-  
-The Newton's Method, we now consider the rootfinding problem f(p) = 0. To numerically find the root, we consider Newton's Method (p0 given). Where
-p_(n+1) = p_n - f(p_n)/f'(p_n) where n = 0,1,2,... . The stopping criterion causes a premature stop in our iteration |p_(k+1) - p_k| is <= TOL.
+  criterion holds, unless Nmax iteration have been performed, in that case k = Nmax. The Newton's Method, we now consider the rootfinding problem f(p) = 0. To
+  numerically find the root, we consider Newton's Method (p0 given). Where p_(n+1) = p_n - f(p_n)/f'(p_n) where n = 0,1,2,... . The stopping criterion 
+  causes a premature stop in our iteration |p_(k+1) - p_k| is <= TOL.
 
-    The function f is the input function which the user will put in to find the convergence of our root.
-    The function fdiff is the input differentiated function of f which the user will put in to find the convergence of our root.
-    The Float p0 is the point in our domain, which represents the initual approximation to start the Newton's Method. 
-    The integer Nmax the maximum number of iterations which our function will run in a for loop.
-    The Float TOL is the tolerance which the function will allow the difference between our p_(k+1) and p_k.
+    def newton_stop (f , dfdx , p0 , Nmax , TOL ) :
+    pn = p0
+    p_list = []
+    if dfdx == 0:
+        raise InputError()
+    if p0 <= 0:
+        raise ValueError("The input digit must be a positive Integer")
+    if Nmax <= 0 or type(Nmax)!=int:
+        raise ValueError("The input for the maximum iteration needs to be posive Integer")
+    for n in np.arange(0, Nmax):
+        pn_plusone = pn - f(pn)/dfdx(pn)
+        p_list.append(pn_plusone)
+        if abs(pn_plusone - pn) <= TOL:
+            break 
+        pn = pn_plusone
+    p_array = np.array(p_list)
+    return p_array
     
   The output of our function an numpy.ndarray called p_array, its dimension is (k, ). This is provides an approximations p_n where n belongs to a 
   set of naterual numbers up to k computed by Newton's Method with the stopping criterion. The value of k is the smallest integer such that stopping
