@@ -22,13 +22,21 @@ The Fix-point iteration Part 1, from here on the code is of my own. This functio
   
 The Fix-point iteration Part 2, from here on the code is of my own. This function considers the fixed-point problem g(p) = p with the stopping criterion. To numerically find a fixed point, for which the absolute difference between  p_k and g(p_k) is less then our tolerence. We consider the fixed-point iteration method (p0 given). The function is mainly writen in the method of p_n = g(p_n-1) where n belongs to a set of natural numbers, once the error between is below the tolerance the iteration would stop before reaching Nmax. The purpose of this function is to a value p_k which is close enough without having the function conduct a lenghty iteration using up an emense amount of run time.
 
-  The purpouse of this method is to find a point x_n of our function by repeatedly iterating the value of x_n-1 into our function g.Once |p_k - g(p_k)| <= TOL. 
-  The iteration stops. In our function we are given the permeters of (g,p0,Nmax,TOL).
-  
-    The function g is the input which the user will put in to find the convergence of our fixpoint.
-    The Float p0 is the point in our domain, which represents the initual approximation to start the fix-point iteration. 
-    The integer Nmax the maximum number of iterations which our function will run in a for loop.
-    The Float TOL is the tolerance which the function will allow the difference between our p_k and g(p_k).
+    def fixedpoint_iteration_stop(g,p0,Nmax,TOL):
+    p_list = []
+    pn = p0
+    if p0 <= 0:
+        raise ValueError("The input digit must be a positive Integer")
+    if Nmax <= 0 or type(Nmax)!=int:
+        raise ValueError("The input for the maximum iteration needs to be posive Integer")
+    for n in np.arange(1, Nmax):
+        pn_plusone = g(pn)
+        if abs(pn_plusone - pn) <= TOL:
+            break 
+        p_list.append(pn_plusone)
+        pn = pn_plusone
+    p_array = np.array(p_list)
+    return p_array
     
   The output of our function an numpy.ndarray called p_array, its dimension is (k, ). This is provides an approximations p_n where n belongs to a 
   set of naterual numbers up to k computed by the fixed-point iteration with the stopping criterion. The value of k is the smallest integer such that stopping
