@@ -1,5 +1,4 @@
 # Linear-System
-Scientific computation coursework
 
 This file consists of codes which are designed to help find a root of a function using different methods such as fix-point iteration and Newton's method. Then a code which helps display the difference in convergence of two systems and then the optimisation of the Fix-point iteration.
 
