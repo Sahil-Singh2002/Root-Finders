@@ -1,23 +1,25 @@
 # Linear-System
 
-This file consists of codes which are designed to help find a root of a function using different methods such as fix-point iteration and Newton's method. Then a code which helps display the difference in convergence of two systems and then the optimisation of the Fix-point iteration.
+This file consists of codes designed to help find a root of a function using different methods such as fixed-point iteration and Newton's method. It also includes code to display the difference in convergence of two systems and optimize the fixed-point iteration.
 
-* The Fix-point iteration Part 1. This function considers the fixed-point problem g(p) = p. To numerically find a fixed point, we consider the fixed-point iteration method (p0 given). The function is mainly writen in the method of p_n = g(p_n-1) where n belongs to a set of natural numbers. The purpose of this function is to cause us to find a point of convergence after n number of iterations which in our function is Nmax, such that g(x_n) = x_n as n aproched infinity. The output of our function an numpy.ndarray called p_array, its dimension is (Nmax, ). This is provides an approximations p_n where n belongs to a set of naterual numbers computed by the fixed-point iteration.
-  
-* The Fix-point iteration Part 2. This function is the same as above but with the stopping criterion. To numerically find a fixed point, for which the absolute difference between  p_k and g(p_k) is less then our tolerence. We consider the fixed-point iteration method (p0 given). The function is mainly writen in the method of p_n = g(p_n-1), once the error between is below the tolerance the iteration would stop before reaching Nmax. The purpose of this function is to a value p_k which is close enough without having the function conduct a lenghty iteration using up an emense amount of run time. The output of our function an numpy.ndarray called p_array, its dimension is (k,). This is provides an approximations p_n where n belongs to a set of naterual numbers up to k computed by the fixed-point iteration with the stopping criterion. The value of k is the smallest integer such that stopping criterion holds, unless Nmax iteration have been performed, in that case k = Nmax. 
-  
-* The Newton's Method, we now consider the rootfinding problem f(p) = 0. To numerically find the root, we consider Newton's Method (p0 given).
-Where p_(n+1) = p_n - f(p_n)/f'(p_n). The stopping criterion causes a premature stop in our iteration |p_(k+1) - p_k| is <= TOL. The output of our function an numpy.ndarray called p_array, its dimension is (k, ). This is provides an approximations p_n where n belongs to a set of naterual numbers up to k computed by Newton's Method with the stopping criterion. The value of k is the smallest integer such that stopping criterion holds, unless Nmax iteration have been performed, in that case k = Nmax.
-  
-* The Convergence behaviour: Plotting the error. We start the the problem with the assumption that we know what exaclty p is. We plot the absolute value of the error, 
-e_n = | p - p_n |, at each iteration. This function will just plot the error using matplotlib.pyplot. We see on of the plots the convergence of both iterative methods such as Fixed-point iteration and Newton's Method. In this we see clearly that Newton's method has a faster convergence rate in a low number of iterations, then Fix-point iteration does. Both starting from the same p0. As we see, the function creates a figure with a plot of the errors for the fixed-point iteration method, using the function fixedpoint_iteration. Also ploting, in the same axies, the errors for Newton's method. Computing the Newton-method approximations using your newton_stop, based on the input for (f,fddx,p0,Nmax) and setting TOL as very small value such as TOL = 1.0e-16. Then we we ensure the graphs can be distinguished from one another.
-  
-* Optimizing the Fix-point iteration Method. In this function we return the fixed-point iteration method with stopping crition and aim to optimise the parameter c within the functuion g where g(x) = x - cf(x). Our starting off peramters are (f,c_array,p0,TOL) for optimize_FPmethod. The function should return a real number/ float c_opt and the corresponding integer n_opt, which corresponds to the optional value c in the following way: the optimal c - c_opt is the element inside of our ndarray c_array, for which the fastest convergence takes place given the Tolerance value TOL, using the initual value p0. So | p_k - g(p_k) | reaches the TOL in the least number of iterations n_opt. This is so that we can a reduced run time for the machine, for a fastest system.
+## Fixed-Point Iteration
 
+### Part 1: Fixed-Point Problem
+Consider the fixed-point problem $g(p) = p$. To numerically find a fixed point, we use the fixed-point iteration method with an initial value $p_0$. The iteration is given by $p_n = g(p_{n-1})$ for $n$ belonging to a set of natural numbers. The purpose is to find a point of convergence after $N_{\text{max}}$ iterations, such that $g(x_n) = x_n$ as $n$ approaches infinity. The output is a numpy.ndarray called `p_array` with dimensions $(N_{\text{max}},)$, providing the approximations $p_n$.
 
-In conclusion these set of codes are just implementation of convegencing algorithms which i have learned in my module introduction to scientific computation, the set of codes are to help find a solution to a non_linear system as fast as possiable as seen in the code Newton's method produces the fastest convergence.
-  
-  
-  
-  
-  
+### Part 2: Fixed-Point Problem with Stopping Criterion
+Similar to Part 1, we consider the fixed-point problem $g(p) = p$ with an additional stopping criterion. The iteration stops when the absolute difference between $p_k$ and $g(p_k)$ is less than the tolerance. This avoids lengthy iterations. The output is a numpy.ndarray called `p_array` with dimensions $(k,)$, providing the approximations $p_n$ up to $k$. The value of $k$ is the smallest integer for which the stopping criterion holds, unless $N_{\text{max}}$ iterations have been performed, in which case $k = N_{\text{max}}$.
+
+## Newton's Method
+
+We now consider the rootfinding problem $f(p) = 0$. To numerically find the root, we use Newton's Method with an initial value $p_0$. The iteration is given by $p_{n+1} = p_n - \frac{f(p_n)}{f'(p_n)}$. The stopping criterion is when $|p_{k+1} - p_k| \leq \text{TOL}$. The output is a numpy.ndarray called `p_array` with dimensions $(k,)$, providing the approximations $p_n$ up to $k$. The value of $k$ is the smallest integer for which the stopping criterion holds, unless $N_{\text{max}}$ iterations have been performed, in which case $k = N_{\text{max}}$.
+
+## Convergence Behavior: Plotting the Error
+
+We plot the absolute value of the error, $e_n = | p - p_n |$, at each iteration. This function uses matplotlib.pyplot. The resulting plot shows the convergence of both fixed-point iteration and Newton's Method. We observe that Newton's method has a faster convergence rate in fewer iterations compared to fixed-point iteration, both starting from the same $p_0$. The function creates a figure with a plot of the errors for the fixed-point iteration method, using the function `fixedpoint_iteration`. It also plots the errors for Newton's method, computed using the `newton_stop` function with inputs $(f, f''(x), p_0, N_{\text{max}})$ and setting $\text{TOL}$ to a very small value such as $\text{TOL} = 1.0 \times 10^{-16}$. This ensures that the graphs can be distinguished from each other.
+
+## Optimizing the Fixed-Point Iteration Method
+
+This function returns the fixed-point iteration method with a stopping criterion and aims to optimize the parameter $c$ within the function $g(x) = x - cf(x)$. The inputs are $(f, c_{\text{array}}, p_0, \text{TOL})$ for `optimize_FPmethod`. The function returns a real number $c_{\text{opt}}$ and the corresponding integer $n_{\text{opt}}$. The optimal $c - c_{\text{opt}}$ is the element inside the ndarray $c_{\text{array}}$, for which the fastest convergence takes place given the tolerance value $\text{TOL}$ and the initial value $p_0$. Thus, $|p_k - g(p_k)|$ reaches $\text{TOL}$ in the least number of iterations $n_{\text{opt}}$, resulting in reduced run time.
+
+In conclusion, these codes implement convergence algorithms learned in the module "Introduction to Scientific Computation." They aim to find solutions to nonlinear systems as fast as possible. As observed, Newton's method produces the fastest convergence.
